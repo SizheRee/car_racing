@@ -1,0 +1,7 @@
+box2d-py==2.3.5
+gym==0.26.2
+numpy==1.18.5
+opencv-contrib-python==4.4.0.46
+torch==1.12.1+cu113
+torchaudio==0.12.1+cu113
+torchvision==0.13.1+cu113
