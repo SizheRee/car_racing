@@ -1,5 +1,6 @@
 log/
 runs/
+models/
 .vscode/
 .ipynb_checkpoints/
 __pycache__/

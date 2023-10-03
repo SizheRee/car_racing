@@ -1,9 +1,7 @@
 import collections
 import numpy as np
 
-Experience = collections.namedtuple(
-    'Experience', field_names=['state', 'action', 'reward',
-                               'done', 'new_state'])
+Experience = collections.namedtuple( 'Experience', field_names=['state', 'action', 'reward', 'done', 'new_state'])
 
 class ExperienceBuffer:
     def __init__(self, capacity):

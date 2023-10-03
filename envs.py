@@ -1,17 +1,7 @@
-import argparse
-
-import numpy as np
-
 import gym
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
-from torch.distributions import Beta
-from torch.utils.data.sampler import BatchSampler, SubsetRandomSampler
-# from utils import DrawLine
 import cv2
-
+import numpy as np
 import utils
 import logging
 logger = logging.getLogger(__name__)
@@ -19,9 +9,6 @@ logger = logging.getLogger(__name__)
 SEED = 1
 IMG_STACK = 4
 ACTION_REPEAT = 8
-
-transition = np.dtype([('s', np.float64, (IMG_STACK, 96, 96)), ('a', np.float64, (3,)), ('a_logp', np.float64),
-                       ('r', np.float64), ('s_', np.float64, (IMG_STACK, 96, 96))])
 
 
 class GoodWrapper(gym.Wrapper):
@@ -50,7 +37,6 @@ class GoodWrapper(gym.Wrapper):
     def step(self, action):
         total_reward = 0
         for i in range(ACTION_REPEAT):
-            # img_rgb, reward, die, _ = self.env.step(action)
             observition, reward, terminated, truncated, info = self.env.step(action)
             # 前进step返回的obs是rgb图，非字典
             img_rgb = observition
@@ -61,10 +47,10 @@ class GoodWrapper(gym.Wrapper):
             if die:
                 logger.debug("DIE")
                 reward += -1
-            # 进入周围场地惩罚
+            # 进入周围场地惩罚 0.05
             if np.mean(img_rgb[63:65, 47:50, 1]) > 150:
                 logger.debug("OUT")
-                reward -= 0.05
+                reward -= 0.1
             total_reward += reward
             # 最近几次没有提升，停止
             done = True if self.av_r(reward) <= -0.1 else False
