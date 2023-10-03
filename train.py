@@ -108,7 +108,7 @@ if __name__ == "__main__":
         net.load_state_dict(torch.load(args.checkpoint))
         tgt_net.load_state_dict(net.state_dict())
         logger.info("Loaded checkpoint from %s" % args.checkpoint)
-        print("Loaded checkpoint from %s" % args.checkpoint)
+        print("DEBUG: Loaded checkpoint from %s" % args.checkpoint)
         
     writer = SummaryWriter(comment="-" + args.env)
     logger.info(net), print(net)
